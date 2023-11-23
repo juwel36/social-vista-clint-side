@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "../shared/Navbar/Navbar";
 
 const Main = () => {
 
@@ -6,7 +7,7 @@ const Main = () => {
   return (
     <div>
       
-<h1> main</h1>
+<Navbar></Navbar>
 
 <Outlet></Outlet>
 
