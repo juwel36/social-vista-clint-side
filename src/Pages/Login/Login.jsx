@@ -1,23 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../shared/Navbar/Navbar";
 import img from '../../assets/login.jpg'
 import GoogleLoginbtn from "../../Components/GoogleLoginbtn";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProbider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+const navigate=useNavigate()
+  const {Loginguser} =useContext(AuthContext)
 
   const handlelogin=e=>{
     e.preventDefault()
     const email = e.target.email.value;
     const password = e.target.password.value;
   
-  //   Loginguser(email,password)
-  // .then(res=>{
-  // alert('log in succesfully')
-  // navigate(from, { replace: true });
-  // })
-  // .catch(err=>{
-  //   console.log(err);
-  // })
+    Loginguser(email,password)
+  .then(res=>{
+ Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Logged In Succsesfully",
+  showConfirmButton: false,
+  timer: 1500
+});
+navigate('/')
+  })
+  .catch(err=>{
+    console.log(err);
+  })
   
   
   }

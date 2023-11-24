@@ -1,44 +1,59 @@
 import { useForm } from "react-hook-form";
-import Navbar from "../../shared/Navbar/Navbar";
-import img from '../../assets/141.jpg'
-import { Link } from "react-router-dom";
-import GoogleLoginbtn from "../../Components/GoogleLoginbtn";
 
+import img from '../../assets/141.jpg'
+import { Link, useNavigate } from "react-router-dom";
+import GoogleLoginbtn from "../../Components/GoogleLoginbtn";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProbider/AuthProvider";
+import useAxiosPublic from '../../Hooks/useAxiosPublic'
+import Navbar from "../../shared/Navbar/Navbar";
+import Swal from "sweetalert2";
 
 
 const SignUp = () => {
+
+  const {createuser,updateprofile} =useContext(AuthContext)
+const navigate=useNavigate()
+const axiosPublic=useAxiosPublic()
+
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+  const onSubmit = async (data) => {
+    try {
+      const res = await createuser(data.email, data.password);
+      console.log(res);
+  
+      await updateprofile(data.name, data.photoUrl);
+  
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        Badge: 'Bronze',
+      };
+  
+      const dbResponse = await axiosPublic.post('/users', userInfo);
+  
+      if (dbResponse.data.insertedId) {
+        console.log('Data added to the database');
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Regester successfully ",
+          showConfirmButton: false,
+          timer: 1500
+        });
 
-  const onSubmit = (data) => {
-    console.log(data.email,data.password,data.photoUrl,data.name);
-// createuser(data.email,data.password)
 
-//     .then(res=>{
-
-// updateprofile(data.name,data.photoUrl)
-// .then(()=>{
-// // create user entry in the database
-// const userInfo={
-// name: data.name,
-// email:data.email
-// }
-// axoisPublic.post('/users',userInfo)
-// .then(res=>{
-//   if(res.data.insertedId){
-//     console.log('data added in databse');
-//   }
-// })
-// .catch(err=>console.log(err))
-// })
-
-//     })
-
-  }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
 
   return (
@@ -84,7 +99,7 @@ const SignUp = () => {
             <span className="label-text text-white">Password</span>
           </label>
           <input type="password" name='password' {...register("password", {required: true, minLength: 4 })} placeholder="password" className="input input-bordered" required />
-          {errors.password && <span className="text-red-500"> 6+ required</span>}
+          {errors.password && <span className="text-red-500"> 4+ required</span>}
           <label className="label">
           <p href="#" className="label-text-alt text-black ">Already Have an account ?<span className='text-white'> <Link to='/login'>Log In</Link></span> </p>
           </label>
