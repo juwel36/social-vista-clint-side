@@ -9,6 +9,7 @@ import MemberShip from "../Pages/MemberShip/MemberShip";
 import PrivetRoute from "../PrivetRouts/PrivetRoute";
 import Deshboard from "../Pages/Deshboard/Deshboard";
 import UserHome from "../Pages/Deshboard/UserHome";
+import UserProfile from "../Pages/Deshboard/UserProfile";
 
 
 
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   path:'userHome',
 element: <UserHome></UserHome>
 
+},
+{
+  path:'myprofile',
+element:<UserProfile></UserProfile>
 }
 
 
