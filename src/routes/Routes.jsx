@@ -10,6 +10,7 @@ import PrivetRoute from "../PrivetRouts/PrivetRoute";
 import Deshboard from "../Pages/Deshboard/Deshboard";
 import UserHome from "../Pages/Deshboard/UserHome";
 import UserProfile from "../Pages/Deshboard/UserProfile";
+import AddPost from "../Pages/Deshboard/AddPost";
 
 
 
@@ -48,6 +49,10 @@ element: <UserHome></UserHome>
 {
   path:'myprofile',
 element:<UserProfile></UserProfile>
+},
+{
+  path:'addpost',
+element:<AddPost></AddPost>
 }
 
 
