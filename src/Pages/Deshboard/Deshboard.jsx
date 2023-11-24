@@ -2,6 +2,8 @@ import { FaAddressBook, FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { MdAddToPhotos } from "react-icons/md";
+import img from '../../assets/IMG_20231124_000541.png'
+
 
 const Deshboard = () => {
 
@@ -15,7 +17,11 @@ const Deshboard = () => {
       
 <div className="   bg-white shadow-md shadow-white  w-1/4">
 
-  <ul className="space-y-3 lg:pt-24 p-2">
+<div className="flex justify-center items-center">
+
+<img className="w-24" src={img} alt="" />
+</div>
+  <ul className="space-y-3 lg:pt-7 p-2">
 
 
 <li> <button className="btn w-full border-2  bg-blue-500 text-white border-cyan-700"> <NavLink to='/'> <span className="flex items-center gap-5">

@@ -2,13 +2,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Select from 'react-select';
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 const AddPost = () => {
 const {user}=useContext(AuthContext)
 const [selectedTag, setSelectedTag] = useState(null);
 const axoisSecure=useAxoisSecure()
-
+const [afterloading,setAfterloading]=useState(false)
 
 
 const tagOptions = [
@@ -34,6 +35,7 @@ const currentTime = new Date();
 
 const handleSubmit=async(e)=>{
   e.preventDefault();
+  setAfterloading(true);
   const image=e.target.image.value;
   const name=e.target.name.value;
   const title=e.target.title.value;
@@ -49,7 +51,20 @@ const userData={
 }
 const postdata=await axoisSecure.post('/posts',userData)
 console.log(postdata);
+if(postdata.data.insertedId){
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "posted succesfully",
+    showConfirmButton: false,
+    timer: 1500
+  });
 
+
+  }
+
+
+setAfterloading(false); 
 
 
 }
@@ -139,7 +154,11 @@ Author Email </h1>
 
 
 <input className="btn w-full my-8 mb-14" type="submit" value="Create Post" />
-
+{afterloading && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+              <span className="loading loading-spinner text-primary"></span>
+            </div>
+          )}
 
 </form>
 

@@ -3,10 +3,13 @@ import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Spinner from "../../Components/Spinner";
+import Swal from "sweetalert2";
+import useAxoisPublic from "../../Hooks/useAxiosPublic";
 
 
 const Mypost = () => {
 const axiosSecure=useAxoisSecure()
+const axiospublic=useAxoisPublic()
 const {user}=useContext(AuthContext)
 
   const { isPending, data:posts } = useQuery({
@@ -19,6 +22,43 @@ const {user}=useContext(AuthContext)
 
   if (isPending) return <Spinner></Spinner>
 
+  // const handledelete = (_id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axiospublic
+  //         .delete(`/posts/${_id}`)
+  //         .then((res) => {
+  //           if (res.data.deletedCount > 0) {
+  //             // Call refetch here to update the data
+  //             refetch();
+  //             Swal.fire({
+  //               title: "Deleted!",
+  //               text: "Your file has been deleted.",
+  //               icon: "success",
+  //             });
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           // Handle error, e.g., show an error message
+  //           console.error("Error deleting post:", error);
+  //           Swal.fire({
+  //             title: "Error",
+  //             text: "An error occurred while deleting the post.",
+  //             icon: "error",
+  //           });
+  //         });
+  //     }
+  //   });
+  // };
+  
 
   return (
     <div className="pt-10">
@@ -43,7 +83,9 @@ const {user}=useContext(AuthContext)
         <td> {item.title}  </td>
         <td> {item.upvote}  </td>
         <td>  <button className="btn">Comments </button>  </td>
-        <td>  <button className="btn">Delete </button>  </td>
+        <td>  <button 
+        // onClick={()=>handledelete(item._id) }
+        className="btn">Delete </button>  </td>
       </tr>  )
       
       }
