@@ -62,8 +62,10 @@ console.log(postdata);
 
       <div className="p-4">
 
+<h1 className="text-2xl pt-3"> Create Post </h1>
+
 <form onSubmit={handleSubmit} >
-<div className="flex   gap-7 mt-10">
+<div className="flex   gap-7 mt-7">
 
 <div className="w-full">
 <h1 className="text-xl font-bold text-black pt-4 pb-3">Author Image </h1>

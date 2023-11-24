@@ -11,6 +11,7 @@ import Deshboard from "../Pages/Deshboard/Deshboard";
 import UserHome from "../Pages/Deshboard/UserHome";
 import UserProfile from "../Pages/Deshboard/UserProfile";
 import AddPost from "../Pages/Deshboard/AddPost";
+import Mypost from "../Pages/Deshboard/Mypost";
 
 
 
@@ -53,6 +54,10 @@ element:<UserProfile></UserProfile>
 {
   path:'addpost',
 element:<AddPost></AddPost>
+},
+{
+  path:'myposts',
+element:<Mypost></Mypost>
 }
 
 
