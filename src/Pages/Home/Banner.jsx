@@ -4,45 +4,61 @@ import img from '../../assets/Welcome to Social Vista.png'
 const Banner = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleSearch = async () => {
     try {
       let url;
       if (searchTerm.trim() === '') {
-        url = 'http://localhost:5000/posts';
+        url = `http://localhost:5000/posts?page=${currentPage}`;
       } else {
-        url = `http://localhost:5000/posts?tag=${searchTerm}`;
+        url = `http://localhost:5000/posts?tag=${searchTerm}&page=${currentPage}`;
       }
 
-
-
-      
       const response = await fetch(url);
       const data = await response.json();
       setSearchResults(data);
+
+      const countResponse = await fetch('http://localhost:5000/postscount');
+      const countData = await countResponse.json();
+      const totalPages = Math.ceil(countData.count / 5); 
+      setTotalPages(totalPages);
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/posts');
+        const response = await fetch(`http://localhost:5000/posts?page=${currentPage}`);
         const data = await response.json();
         setSearchResults(data);
+
+       
+        const countResponse = await fetch('http://localhost:5000/postscount');
+        const countData = await countResponse.json();
+        const totalPages = Math.ceil(countData.count / 5); 
+        setTotalPages(totalPages);
       } catch (error) {
         console.error('Error:', error);
       }
     };
 
     fetchData();
-  }, []); 
+  }, [currentPage]);
 
+  const getFormattedTime = (timestamp) => {
+    const date = new Date(timestamp);
+    let hour = date.getUTCHours();
+    const minute = date.getUTCMinutes();
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12;
 
+    return `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
 
-
+  }
 
   return (
     <div>
@@ -71,7 +87,7 @@ const Banner = () => {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
           {searchResults.map((result) => (
            
-<div key={result._id} className="relative flex w-full flex-col rounded-xl  bg-slate-100 p-2  text-gray-700 shadow-none">
+<div key={result._id} className="relative flex w-full flex-col rounded-xl  bg-slate-100 p-2  text-gray-700 shadow-md">
   <div className="relative flex items-center gap-4 pt-0 pb-8 mx-0 mt-4 overflow-hidden text-black shadow-none rounded-xl bg-clip-border">
     <img
       src={result.image}
@@ -93,14 +109,41 @@ const Banner = () => {
     </div>
   </div>
   <div className="p-0 mb-6">
-    <p className="    ">
+    <p className=" text-xl   ">
     Title:  {result.title}
     </p>
   </div>
+<div className='flex justify-between font-semibold'>
+<h1> Tag: {result.tag} </h1>
+<h1>Time: {getFormattedTime(result.timestamp)} </h1>
+</div>
+<div className='flex justify-between mt-3 font-semibold'>
+<h1> Coments count </h1>
+<h1>votes count </h1>
 </div>
 
 
 
+
+</div>
+
+
+
+          ))}
+        </div>
+        
+        {/* Pagination  */}
+        <div className="mt-4 flex justify-center">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              className={`mx-2 px-4 py-2 rounded ${
+                currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
           ))}
         </div>
       </div>
