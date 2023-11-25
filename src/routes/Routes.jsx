@@ -12,6 +12,7 @@ import UserHome from "../Pages/Deshboard/UserHome";
 import UserProfile from "../Pages/Deshboard/UserProfile";
 import AddPost from "../Pages/Deshboard/AddPost";
 import Mypost from "../Pages/Deshboard/Mypost";
+import PostDetail from "../Pages/PostDetails.jsx/PostDetail";
 
 
 
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
 {
   path:'/membership',
   element:<PrivetRoute><MemberShip></MemberShip></PrivetRoute>
+},
+{
+  path:'/details/:id',
+  element: <PostDetail></PostDetail>,
+  loader:({params})=> fetch(`http://localhost:5000/posts/${params.id}`)
 }
 
 

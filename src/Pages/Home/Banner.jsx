@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
 import img from '../../assets/Welcome to Social Vista.png'
+import { Link } from 'react-router-dom';
+import useAxiosSecure from '../../Hooks/useAxiosSecure'
+import { useQuery } from '@tanstack/react-query';
+// import useComments from '../../Hooks/useComments';
+// 
+// 
 
 const Banner = () => {
+
+  // const [comments]=useComments()
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const axiosSecure=useAxiosSecure()
 
   const handleSearch = async () => {
     try {
@@ -49,6 +58,28 @@ const Banner = () => {
     fetchData();
   }, [currentPage]);
 
+
+
+
+
+  
+
+  const { isPending,  data:comments } = useQuery({
+    queryKey: ['comments'],
+    queryFn:async () =>{
+  const res=await axiosSecure.get('/comments')
+  return res.data
+    }
+     
+  })
+  
+  
+
+
+
+
+
+  
   const getFormattedTime = (timestamp) => {
     const date = new Date(timestamp);
     let hour = date.getUTCHours();
@@ -60,9 +91,13 @@ const Banner = () => {
 
   }
 
+
+
+
+
   return (
     <div>
-      <div className="relative">
+      <div  className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-70 rounded-lg"></div>
         <img className="h-96 w-full mt-7 rounded-lg" src={img} alt="" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
@@ -87,7 +122,9 @@ const Banner = () => {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
           {searchResults.map((result) => (
            
-<div key={result._id} className="relative flex w-full flex-col rounded-xl  bg-slate-100 p-2  text-gray-700 shadow-md">
+<Link  key={result._id} to={`/details/${result._id}`}>
+
+<div  className="relative flex w-full flex-col rounded-xl h-72  bg-slate-100 p-2  text-gray-700 shadow-md">
   <div className="relative flex items-center gap-4 pt-0 pb-8 mx-0 mt-4 overflow-hidden text-black shadow-none rounded-xl bg-clip-border">
     <img
       src={result.image}
@@ -108,17 +145,31 @@ const Banner = () => {
      
     </div>
   </div>
-  <div className="p-0 mb-6">
-    <p className=" text-xl   ">
+  <div className="p-0 mb-6 flex-grow ">
+    <p className=" text-xl  ">
     Title:  {result.title}
     </p>
   </div>
-<div className='flex justify-between font-semibold'>
+<div className='flex justify-between font-semibold '>
 <h1> Tag: {result.tag} </h1>
 <h1>Time: {getFormattedTime(result.timestamp)} </h1>
 </div>
 <div className='flex justify-between mt-3 font-semibold'>
-<h1> Coments count </h1>
+<h1> 
+
+<h1>
+             
+                {comments
+                  .filter((item) => item.postId === result._id)
+                  .length}
+                {' '}
+                Comments
+              </h1>
+
+
+
+ 
+    </h1>
 <h1>votes count </h1>
 </div>
 
@@ -127,13 +178,16 @@ const Banner = () => {
 
 </div>
 
+</Link>
+
+
 
 
           ))}
         </div>
         
-        {/* Pagination  */}
-        <div className="mt-4 flex justify-center">
+        {/* Pagination controls */}
+        <div className="mt-4 flex justify-center overflow-x-auto">
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
