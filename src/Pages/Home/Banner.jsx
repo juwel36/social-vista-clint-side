@@ -3,6 +3,7 @@ import img from '../../assets/Welcome to Social Vista.png'
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query';
+import { FaComments } from 'react-icons/fa';
 // import useComments from '../../Hooks/useComments';
 // 
 // 
@@ -157,20 +158,19 @@ const Banner = () => {
 <div className='flex justify-between mt-3 font-semibold'>
 <h1> 
 
-<h1>
+<h1 className='flex items-center gap-2'>
+  <FaComments />
              
-                {comments
-                  .filter((item) => item.postId === result._id)
+                {comments?.filter((item) => item.postId === result._id)
                   .length}
                 {' '}
-                Comments
               </h1>
-
-
-
- 
     </h1>
-<h1>votes count </h1>
+    <div>
+
+<button> upvote </button>
+<button> downvote </button>
+    </div>
 </div>
 
 

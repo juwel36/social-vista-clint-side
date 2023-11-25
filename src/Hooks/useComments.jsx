@@ -5,7 +5,7 @@ const useComments = () =>  {
   const axiosSecure=useAxiosSecure()
   
   
-  const { isPending,  data:comments } = useQuery({
+  const { isPending,  data:comments ,refetch} = useQuery({
     queryKey: ['comments'],
     queryFn:async () =>{
   const res=await axiosSecure.get('/comments')
@@ -17,6 +17,6 @@ const useComments = () =>  {
   
   
   
-  return [comments,isPending]
+  return [comments,isPending,refetch]
   };
 export default useComments;
