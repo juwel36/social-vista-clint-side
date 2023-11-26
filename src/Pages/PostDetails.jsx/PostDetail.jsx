@@ -1,12 +1,12 @@
 
-import { FaShare } from "react-icons/fa";
+import { FaInstagram, FaShare, FaTwitter } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-
+import { FacebookIcon, FacebookShareButton, TwitterShareButton } from "react-share";
 
 
 const PostDetail = () => {
@@ -84,6 +84,31 @@ const PostDetail = () => {
   };
 
 
+  const shareUrl = window.location.href;
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          text: description,
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      Swal.fire({
+        position: "top-end",
+        icon: "info",
+        title: "Web Share API not supported in this browser. You can manually copy the link.",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  };
+
+
 
   return (
     <div className="mt-10 max-w-6xl mx-auto">
@@ -124,15 +149,16 @@ const PostDetail = () => {
           <div className="flex gap-4 my-5">
           <button
           onClick={() => handleVote('upvote')}
-          className={`flex gap-2 items-center border-2 rounded-lg p-1 px-3 ${voteType === 'upvote' ? 'bg-blue-500 text-white' : ''}`}
+          className={`flex btn bg-transparent gap-2 items-center border-4 border-blue-500 rounded-lg p-1 px-3 ${voteType === 'upvote' ? 'bg-blue-500 text-white' : ''}`}
           disabled={voted}
         >
           Up Vote <SlLike />
         </button>
-            <button onClick={() => handleVote('downvote')}    className={`flex gap-2 items-center border-2 rounded-lg p-1 px-3 ${voteType === 'downvote' ? 'bg-blue-500 text-white' : ''}`}
+            <button onClick={() => handleVote('downvote')}    className={`flex gap-2 bg-transparent btn items-center border-4 border-blue-500  rounded-lg p-1 px-3 ${voteType === 'downvote' ? 'bg-blue-500 text-white' : ''}`}
           disabled={voted}> Down Vote <SlDislike /> </button>
           </div>
-          <div>
+        <div className="flex flex-col lg:flex-row justify-between">
+        <div>
             <form onSubmit={handlepostcomment}>
 
               <input type="text" name="comment" placeholder="write your comment" className="input input-bordered input-info w-full max-w-xs" />
@@ -143,14 +169,29 @@ const PostDetail = () => {
 
 
           </div>
+          <div className="flex items-center mt-8">
+         <span className="text-2xl mr-5">
+         Share on :
+         </span>
+        <TwitterShareButton url={shareUrl} title={title} className=" mt-4  text-xs">
+        <span className="btn py-8 text-blue-400 text-2xl"> <FaTwitter></FaTwitter>  </span>
+        </TwitterShareButton>
+        <FacebookShareButton url={shareUrl} title={title} className=" mt-4 bg-blue-500 text-white  text-xs">
+        <span >   <FacebookIcon></FacebookIcon></span>
+        </FacebookShareButton>
+
+          <button onClick={handleShare} className="btn mt-4  bg-blue-600 text-white py-8"> <FaShare></FaShare> </button>
+          
+        </div>
+
+
+        </div>
 
         </div>
 
 
 
-        <div>
-          <FaShare></FaShare>
-        </div>
+     
 
 
       </div>
