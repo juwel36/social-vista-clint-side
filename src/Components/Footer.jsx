@@ -3,10 +3,10 @@ import img from '../assets/IMG_20231124_000541.png'
 const Footer = () => {
   return (
     <div className="mt-16">
-      <footer className="w-full bg-white p-8 border-t-4" >
+      <footer className="w-full bg-slate-100 p-8 border-t-4" >
  <div className="max-w-6xl mx-auto">
- <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
-    <img src={img} alt="logo-ct" className="w-24" />
+ <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-slate-100 text-center md:justify-between">
+    <img src={img} alt="logo-ct" className="w-16" />
     <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
       <li>
         <a

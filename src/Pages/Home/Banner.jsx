@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query';
 import { FaComments } from 'react-icons/fa';
+import { SlDislike, SlLike } from 'react-icons/sl';
 // import useComments from '../../Hooks/useComments';
 // 
 // 
@@ -120,6 +121,15 @@ const Banner = () => {
 
       <div className="mt-4">
         <h2 className="text-2xl font-bold mb-2">Search Results</h2>
+        
+        <div>
+
+          
+        </div>
+        
+        
+        
+        
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
           {searchResults.map((result) => (
            
@@ -168,8 +178,16 @@ const Banner = () => {
     </h1>
     <div>
 
-<button> upvote </button>
-<button> downvote </button>
+    <div className="flex gap-5">
+            <div className="flex gap-1 items-center">
+              <SlLike />
+              {result.upvote}
+            </div>
+            <div className="flex gap-1 items-center">
+              <SlDislike />
+              {result.downvote}
+            </div>
+          </div>
     </div>
 </div>
 

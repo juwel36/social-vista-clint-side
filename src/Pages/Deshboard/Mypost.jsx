@@ -5,6 +5,7 @@ import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Spinner from "../../Components/Spinner";
 import Swal from "sweetalert2";
 import useAxoisPublic from "../../Hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 
 const Mypost = () => {
@@ -19,6 +20,7 @@ const {user}=useContext(AuthContext)
       return res.data
     }
   })
+
 
   if (isPending) return <Spinner></Spinner>
 
@@ -64,7 +66,7 @@ const {user}=useContext(AuthContext)
       
       <div className="overflow-x-auto">
   <table className="table">
-    {/* head */}
+ 
     <thead>
       <tr>
         <th></th>
@@ -81,7 +83,11 @@ const {user}=useContext(AuthContext)
         <th>{index}  </th>
         <td> {item.title}  </td>
         <td> {item.upvote}  </td>
-        <td>  <button className="btn">Comments </button>  </td>
+        <td>
+          <Link to={`/comments/${item._id}`}>
+            <button className="btn">Comments </button>
+          </Link>
+              </td>
         <td>  <button 
         onClick={()=>handledelete(item._id) }
         className="btn">Delete </button>  </td>

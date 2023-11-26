@@ -13,6 +13,7 @@ import UserProfile from "../Pages/Deshboard/UserProfile";
 import AddPost from "../Pages/Deshboard/AddPost";
 import Mypost from "../Pages/Deshboard/Mypost";
 import PostDetail from "../Pages/PostDetails.jsx/PostDetail";
+import Comments from "../Pages/Comments/Comments";
 
 
 
@@ -35,7 +36,12 @@ const router = createBrowserRouter([
   path:'/details/:id',
   element: <PostDetail></PostDetail>,
   loader:({params})=> fetch(`http://localhost:5000/posts/${params.id}`)
-}
+},
+{
+  path: '/comments/:postId',
+  element: <Comments></Comments>,
+  loader: ({ params }) => ({ postId: params.postId }),
+},
 
 
 
