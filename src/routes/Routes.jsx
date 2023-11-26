@@ -16,6 +16,7 @@ import PostDetail from "../Pages/PostDetails.jsx/PostDetail";
 import Comments from "../Pages/Comments/Comments";
 import AdminProfile from "../Pages/Deshboard/AdminProfile";
 import MakeAnnouncement from "../Pages/Deshboard/MakeAnnouncement";
+import ManageUsers from "../Pages/Deshboard/ManageUsers";
 
 
 
@@ -82,6 +83,10 @@ element:<AdminProfile></AdminProfile>
 {
   path:'makeAnnouncement',
 element:<MakeAnnouncement></MakeAnnouncement>
+},
+{
+  path:'manageUsers',
+element:<ManageUsers></ManageUsers>
 }
 
 

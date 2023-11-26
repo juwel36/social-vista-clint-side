@@ -3,11 +3,13 @@ import { NavLink, Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { MdAddToPhotos } from "react-icons/md";
 import img from '../../assets/IMG_20231124_000541.png'
+import useAdmin from "../../Hooks/useAdmin";
 
 
 const Deshboard = () => {
 
-const isAdmin =true;
+  const [isAdmin]=useAdmin()
+
 
   
   return (
