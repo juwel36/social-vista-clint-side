@@ -6,13 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 import { FaComments } from 'react-icons/fa';
 import { SlDislike, SlLike } from 'react-icons/sl';
 import Suggestedtag from '../../Components/Suggestedtag';
-// import useComments from '../../Hooks/useComments';
-// 
-// 
+import Spinner from '../../Components/Spinner';
+
+
 
 const Banner = () => {
 
-  // const [comments]=useComments()
+ 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,7 +78,7 @@ const Banner = () => {
   
   
 
-
+if(isPending) return <Spinner></Spinner>
 
 
 

@@ -14,6 +14,8 @@ import AddPost from "../Pages/Deshboard/AddPost";
 import Mypost from "../Pages/Deshboard/Mypost";
 import PostDetail from "../Pages/PostDetails.jsx/PostDetail";
 import Comments from "../Pages/Comments/Comments";
+import AdminProfile from "../Pages/Deshboard/AdminProfile";
+import MakeAnnouncement from "../Pages/Deshboard/MakeAnnouncement";
 
 
 
@@ -70,6 +72,16 @@ element:<AddPost></AddPost>
 {
   path:'myposts',
 element:<Mypost></Mypost>
+},
+// admin 
+
+{
+  path:'adminprofile',
+element:<AdminProfile></AdminProfile>
+},
+{
+  path:'makeAnnouncement',
+element:<MakeAnnouncement></MakeAnnouncement>
 }
 
 

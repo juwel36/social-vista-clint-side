@@ -3,6 +3,9 @@ import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Select from 'react-select';
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAxoisPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../Components/Spinner";
 
 
 const AddPost = () => {
@@ -11,20 +14,29 @@ const [selectedTag, setSelectedTag] = useState(null);
 const axoisSecure=useAxoisSecure()
 const [afterloading,setAfterloading]=useState(false)
 
+const axoisPublic=useAxoisPublic()
 
-const tagOptions = [
-  { value: 'politics', label: 'politics' },
-  { value: 'webdevelopment', label: 'webdevelopment' },
-  { value: 'society', label: 'society' },
-  { value: 'humanrights', label: 'humanrights' },
-  { value: 'education', label: 'education' },
-  { value: 'travel', label: 'travel' },
-  { value: 'lifestyle', label: 'lifestyle' },
-  { value: 'fashion', label: 'fashion' },
-  { value: 'pets', label: 'pets' },
-  { value: 'programming', label: 'programming' },
 
-];
+
+  const { isPending,  data:tags } = useQuery({
+    queryKey: ['tags'],
+    queryFn:async () =>{
+  const res=await axoisPublic.get('/tags')
+  return res.data
+    }
+     
+  })
+  
+  
+
+if(isPending) return <Spinner></Spinner>
+
+
+const tagOptions = tags.map((tag) => ({
+  value: tag.tags, 
+  label: tag.tags, 
+}));
+
 
 const handleTagChange = (selectedOption) => {
   setSelectedTag(selectedOption);
@@ -66,7 +78,7 @@ if(postdata.data.insertedId){
     timer: 1500
   });
 
-
+  e.target.reset();
   }
 
 
