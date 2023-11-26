@@ -6,9 +6,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Swal from "sweetalert2";
 import { RiDashboardFill } from "react-icons/ri";
+import useAnnousment from "../../Hooks/useAnnousment";
 
 const Navbar = () => {
 const {user,logOut}=useContext(AuthContext)
+
+const [announcement]=useAnnousment()
+
+
+
 const handlelogout=()=>{
   logOut()
 .then(res=>{
@@ -27,7 +33,13 @@ const handlelogout=()=>{
 const navlink=<>
  <li>   <Link to='/'>  Home </Link> </li>
  <li>   <Link to='/membership'>   Membership </Link> </li>
- <li>   <Link> <p className="text-xl"> <IoMdNotifications></IoMdNotifications> </p>  </Link> </li>
+ <li>   <Link>
+ <button className="flex gap-1 items-center">
+  <span className="text-xl flex text-blue-600"> <IoMdNotifications></IoMdNotifications><h1 className="text-xs text-pink-700">+{announcement?.length}</h1></span>
+ 
+</button>
+ 
+  </Link> </li>
 
 </>
 

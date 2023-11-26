@@ -1,4 +1,6 @@
 
+import Annousments from "../Comments/Annousments";
+
 import Banner from "./Banner";
 
 
@@ -13,7 +15,7 @@ const Home = () => {
 <Banner ></Banner>
 
 
-
+<Annousments></Annousments>
 
 
     </div>
