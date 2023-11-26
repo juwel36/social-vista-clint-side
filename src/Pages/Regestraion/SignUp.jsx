@@ -46,7 +46,7 @@ const axiosPublic=useAxiosPublic()
           showConfirmButton: false,
           timer: 1500
         });
-
+navigate('/')
 
       }
     } catch (error) {

@@ -36,6 +36,10 @@ const currentTime = new Date();
 const handleSubmit=async(e)=>{
   e.preventDefault();
   setAfterloading(true);
+
+
+
+  
   const image=e.target.image.value;
   const name=e.target.name.value;
   const title=e.target.title.value;
@@ -44,6 +48,8 @@ const handleSubmit=async(e)=>{
   const email=e.target.email.value;
   const upvote=e.target.upvote.value;
   const downvote=e.target.downvote.value;
+
+
 
 const userData={
   image,name,title,description,tag,email,upvote,downvote,
@@ -100,7 +106,7 @@ setAfterloading(false);
 <div className="w-full">
 <h1 className="text-xl font-bold text-black pt-4 pb-3">
 Post Title </h1>
-<input type="text" name="title" placeholder=""   className="input input-bordered input-info w-full " />
+<input type="text" name="title" placeholder="" maxLength="70"  className="input input-bordered input-info w-full " />
 </div>
 <div className="w-full">
 <h1 className="text-xl font-bold text-black pt-4 pb-3">Post

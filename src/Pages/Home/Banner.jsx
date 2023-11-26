@@ -5,6 +5,7 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query';
 import { FaComments } from 'react-icons/fa';
 import { SlDislike, SlLike } from 'react-icons/sl';
+import Suggestedtag from '../../Components/Suggestedtag';
 // import useComments from '../../Hooks/useComments';
 // 
 // 
@@ -120,13 +121,13 @@ const Banner = () => {
       </div>
 
       <div className="mt-4">
-        <h2 className="text-2xl font-bold mb-2">Search Results</h2>
         
         <div>
 
-          
+          <Suggestedtag></Suggestedtag>
         </div>
         
+        <h2 className="text-2xl font-bold mb-2 my-4">All Post :</h2>
         
         
         
@@ -156,7 +157,7 @@ const Banner = () => {
      
     </div>
   </div>
-  <div className="p-0 mb-6 flex-grow ">
+  <div className="p-0 mb-6 ">
     <p className=" text-xl  ">
     Title:  {result.title}
     </p>
