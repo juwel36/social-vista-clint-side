@@ -80,7 +80,7 @@ const {user}=useContext(AuthContext)
     <tbody>
       {  
       posts?.map((item,index)=>   <tr key={item._id}>
-        <th>{index}  </th>
+        <th>{index+1}  </th>
         <td> {item.title}  </td>
         <td> {item.upvote}  </td>
         <td>

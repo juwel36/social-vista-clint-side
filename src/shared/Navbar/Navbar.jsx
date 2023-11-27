@@ -7,12 +7,13 @@ import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Swal from "sweetalert2";
 import { RiDashboardFill } from "react-icons/ri";
 import useAnnousment from "../../Hooks/useAnnousment";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
 const {user,logOut}=useContext(AuthContext)
 
 const [announcement]=useAnnousment()
-
+const [isAdmin]=useAdmin()
 
 
 const handlelogout=()=>{
@@ -85,11 +86,19 @@ user? <div className="justify-end">
       <ul tabIndex={0} className="menu menu-sm dropdown-content space-y-6 mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
        <p className="bg-sky-700 text-white p-2 rounded-md"> {user.displayName} </p>
 
-
-        <li className=""> <button className="btn-outline py-2">  
-        <Link to='/deshboard' style={{ display: 'flex', alignItems: 'center' }}>
-      Deshboard <RiDashboardFill style={{ marginLeft: '5px' }} />
-    </Link></button> </li>
+<li>
+{
+  user && isAdmin && <li>   <Link to='/deshboard/adminprofile'>  <button className="btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
+Deshboard <RiDashboardFill style={{ marginLeft: '5px' }} />
+</button> </Link>  </li>
+}
+{
+  user && !isAdmin && <li>   <Link to='/deshboard/myprofile'>  <button className=" btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
+Deshboard <RiDashboardFill style={{ marginLeft: '5px' }} />
+</button> </Link>  </li>
+}
+</li>
+  
         <li> <button onClick={handlelogout} className="btn btn-warning"> Log Out </button> </li>
       </ul>
     </div>

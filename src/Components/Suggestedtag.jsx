@@ -30,7 +30,7 @@ if(isPending) return <Spinner></Spinner>
 
 <div className="flex flex-wrap gap-10 items-center justify-center  bg-slate-300  p-5 rounded-lg">
 {
-  tags.map(item=>(
+  tags?.map(item=>(
     <div key={item._id}>
 <p> # {item.tags} </p>
 

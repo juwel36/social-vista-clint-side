@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import useAxoisPublic from "../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../Components/Spinner";
-
+import { MdPaid } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const AddPost = () => {
 const {user}=useContext(AuthContext)
@@ -17,8 +18,26 @@ const [afterloading,setAfterloading]=useState(false)
 const axoisPublic=useAxoisPublic()
 
 
+  const { isPending, data:posts,refetch } = useQuery({
+    queryKey: ['posts'],
+    queryFn: async () => {
+      const res = await axoisSecure.get(`/posts?email=${user.email}`)
+      return res.data
+    }
+  })
 
-  const { isPending,  data:tags } = useQuery({
+  const {  data: users } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axoisSecure.get(`/users?email=${user.email}`)
+      return res.data
+    }
+
+  })
+
+console.log(users.Badge);
+
+  const {  data:tags } = useQuery({
     queryKey: ['tags'],
     queryFn:async () =>{
   const res=await axoisPublic.get('/tags')
@@ -31,6 +50,19 @@ const axoisPublic=useAxoisPublic()
 
 if(isPending) return <Spinner></Spinner>
 
+let Badge = null;
+
+if (users && users.length > 0) {
+  const currentUser = users.find(u => u.email === user.email);
+  
+  if (currentUser) {
+    Badge = currentUser.Badge;
+  }
+}
+
+const postLimitReached = Badge === "Bronze" && posts && posts.length >= 5;
+
+console.log(postLimitReached);
 
 const tagOptions = tags.map((tag) => ({
   value: tag.tags, 
@@ -96,6 +128,23 @@ setAfterloading(false);
       <div className="p-4">
 
 <h1 className="text-2xl pt-3"> Create Post </h1>
+
+
+{postLimitReached ? (
+        <div className="  lg:p-20">
+          <p>You have reached the maximum limit of 5 posts as a Bronze Badge member.  </p>
+          <Link to='/membership'>
+          
+          <button
+            className="btn  w-full my-8 mb-14"
+           
+          >
+            Become a Member <MdPaid></MdPaid>
+          </button>
+          </Link>
+        </div>
+      ) :(
+
 
 <form onSubmit={handleSubmit} >
 <div className="flex   gap-7 mt-7">
@@ -179,6 +228,10 @@ Author Email </h1>
           )}
 
 </form>
+
+      )
+
+}
 
 
 

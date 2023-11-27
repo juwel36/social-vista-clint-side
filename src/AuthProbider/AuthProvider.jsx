@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider,createUserWithEmailAndPassword,onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../firebaseAuth/firebase.config";
+import useAxoisPublic from "../Hooks/useAxiosPublic";
 
 
 
@@ -11,7 +12,7 @@ const AuthProvider = ({children}) => {
   const [user,setuser]=useState(null)
   const [loading,setloading]=useState(true)
  
-  // const axoisPublic=useAxoisPublic()
+  const axoisPublic=useAxoisPublic()
 
 // create user
   const createuser=(email,password)=>{
@@ -54,22 +55,22 @@ const AuthProvider = ({children}) => {
       console.log('asi re bai asi',currentuser);
     setuser(currentuser)
     setloading(false)
-// if(currentuser){
-// // 
-// const userInfo={email: currentuser.email }
-// axoisPublic.post('/jwt',userInfo)
-// .then(res=>{
-// if(res.data.token){
-//   localStorage.setItem('access-token',res.data.token);
-//   setloading(false)
-// }
-// })
-// }
-// else{
-// // 
-// localStorage.removeItem('access-token')
-// setloading(false)
-// }
+
+    if(currentuser){
+
+      const userInfo={email: currentuser.email }
+      axoisPublic.post('/jwt',userInfo)
+      .then(res=>{
+      if(res.data.token){
+        localStorage.setItem('access-token',res.data.token);
+        setloading(false)
+      }
+      })
+      }
+      else{
+      localStorage.removeItem('access-token')
+      setloading(false)
+      }  
 
    
 
@@ -78,7 +79,7 @@ const AuthProvider = ({children}) => {
       unSubscribe();
     }
     
-    },[])
+    },[axoisPublic])
 
 
 

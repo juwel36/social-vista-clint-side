@@ -1,11 +1,26 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckOutForm from "../Comments/CheckOutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
+
 
 
 const MemberShip = () => {
+
+
+
   return (
-    <div>
+    <div className="h-[70vh]">
       
 
-<h1> welcome to member shhip page</h1>
+
+
+<Elements stripe={stripePromise}>
+    
+<CheckOutForm></CheckOutForm>
+
+    </Elements>
 
     </div>
   );

@@ -71,41 +71,78 @@ const PostDetail = () => {
 
 
   const handleVote = async (type) => {
-    if (!voted) {
-      const response = await axoisSecure.patch(`/posts/${_id}/vote`, { type });
 
-      if (response.data) {
-        
-        setVoted(true);
-        setVoteType(type);
-        window.location.reload();
+
+    if (user) {
+
+      if (!voted) {
+        const response = await axoisSecure.patch(`/posts/${_id}/vote`, { type });
+  
+        if (response.data) {
+          
+          setVoted(true);
+          setVoteType(type);
+          window.location.reload();
+        }
       }
+ 
+
+    } else {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "You have to Log in for Vote",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
     }
+
+
+
   };
 
 
   const shareUrl = window.location.href;
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          text: description,
-          url: window.location.href,
+
+
+    if (user) {
+
+     
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title,
+            text: description,
+            url: window.location.href,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "info",
+          title: "Web Share API not supported in this browser. You can manually copy the link.",
+          showConfirmButton: false,
+          timer: 3000,
         });
-      } catch (error) {
-        console.error(error);
       }
+
     } else {
       Swal.fire({
         position: "top-end",
-        icon: "info",
-        title: "Web Share API not supported in this browser. You can manually copy the link.",
+        icon: "error",
+        title: "You have to Log in for share",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500
       });
+
     }
+
+
   };
 
 
@@ -173,12 +210,38 @@ const PostDetail = () => {
          <span className="text-2xl mr-5">
          Share on :
          </span>
-        <TwitterShareButton url={shareUrl} title={title} className=" mt-4  text-xs">
-        <span className="btn py-8 text-blue-400 text-2xl"> <FaTwitter></FaTwitter>  </span>
-        </TwitterShareButton>
-        <FacebookShareButton url={shareUrl} title={title} className=" mt-4 bg-blue-500 text-white  text-xs">
-        <span >   <FacebookIcon></FacebookIcon></span>
-        </FacebookShareButton>
+         {user ? (
+    <>
+      <TwitterShareButton url={shareUrl} title={title} className="mt-4 text-xs">
+        <span className="btn py-8 text-blue-400 text-2xl">
+          <FaTwitter />
+        </span>
+      </TwitterShareButton>
+      <FacebookShareButton url={shareUrl} title={title} className="mt-4 bg-blue-500 text-white text-xs">
+        <span>
+          <FacebookIcon />
+        </span>
+      </FacebookShareButton>
+    </>
+      )
+      :
+      (
+        <>
+        <div className="flex mt-5">
+
+
+            <span className="btn py-8 text-blue-400 text-2xl">
+              <FaTwitter />
+            </span>
+        
+            <span>
+              <FacebookIcon />
+            </span>
+        
+        </div>
+        </>
+          )
+  }
 
           <button onClick={handleShare} className="btn mt-4  bg-blue-600 text-white py-8"> <FaShare></FaShare> </button>
           
