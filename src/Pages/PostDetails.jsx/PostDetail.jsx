@@ -9,16 +9,16 @@ import Swal from "sweetalert2";
 import { FacebookIcon, FacebookShareButton, TwitterShareButton } from "react-share";
 
 
+
 const PostDetail = () => {
   const { user } = useContext(AuthContext)
   const axoisSecure = useAxoisSecure()
 
 
+const { _id, description, email, image, name, timestamp, tag, title, upvote, downvote } = useLoaderData()
 
-  const { _id, description, email, image, name, timestamp, tag, title, upvote, downvote } = useLoaderData()
-
-  const [voted, setVoted] = useState(false); 
-  const [voteType, setVoteType] = useState(null);
+const [voted, setVoted] = useState(false); 
+const [voteType, setVoteType] = useState(null);
 
   const getFormattedTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -26,11 +26,11 @@ const PostDetail = () => {
     const minute = date.getUTCMinutes();
     const ampm = hour >= 12 ? 'PM' : 'AM';
     hour = hour % 12 || 12;
-
+    
     return `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
-
+    
   }
-
+  
   const handlepostcomment = async (e) => {
     e.preventDefault()
     const comment = e.target.comment.value;
@@ -44,7 +44,7 @@ const PostDetail = () => {
         postId: _id
       }
       const postdata = await axoisSecure.post('/comments', commentdata)
-
+      
       if (postdata.data.insertedId) {
         Swal.fire({
           position: "top-end",
@@ -53,10 +53,10 @@ const PostDetail = () => {
           showConfirmButton: false,
           timer: 1500
         });
-
-
+        
+        
       }
-
+      
     } else {
       Swal.fire({
         position: "top-end",
@@ -79,12 +79,13 @@ const PostDetail = () => {
 
       if (!voted) {
         const response = await axoisSecure.patch(`/posts/${_id}/vote`, { type });
-  
+        
         if (response.data) {
           
           setVoted(true);
           setVoteType(type);
-          window.location.reload();
+          // window.location.reload();
+          
         }
       }
  
@@ -97,19 +98,19 @@ const PostDetail = () => {
         showConfirmButton: false,
         timer: 1500
       });
-
+      
     }
 
 
-
+    
   };
-
-
+  
+  
   const shareUrl = window.location.href;
-
+  
   const handleShare = async () => {
 
-
+    
     if (user) {
 
      
@@ -147,6 +148,7 @@ const PostDetail = () => {
 
   };
 
+  
 
 
   return (

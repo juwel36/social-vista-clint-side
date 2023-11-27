@@ -13,10 +13,10 @@ const Comments = () => {
     queryKey: ['comments', postId],
     queryFn: async () => {
       const res = await axiosSecure.get(`/comments/post/${postId}`);
-      const filteredComments = res.data.filter(comment => comment.postId === postId);
-      return filteredComments;
+      return res.data;
     },
   });
+  
 
   const [selectedComment, setSelectedComment] = useState(null);
   const [selectedFeedback, setSelectedFeedback] = useState(null);
@@ -37,7 +37,7 @@ if(commentdata.data.insertedId){
   Swal.fire({
     position: "top-end",
     icon: "success",
-    title: "posted succesfully",
+    title: " Report posted succesfully",
     showConfirmButton: false,
     timer: 1500
   });
@@ -67,7 +67,7 @@ if(commentdata.data.insertedId){
             </thead>
             <tbody>
               {Array.isArray(comments) && comments.length > 0 ? (
-                comments?.map((comment, index) => (
+                comments.map((comment, index) => (
                   <tr key={comment._id}>
                     <th>{index + 1}</th>
                     <td>{comment.email}</td>
@@ -75,11 +75,9 @@ if(commentdata.data.insertedId){
                       {comment.comment.length > 20 ? (
                         <>
                           {comment.comment.slice(0, 20)}{' '}
-                          <button  onClick={() => handleReadMore(comment)}>
-
+                          <button onClick={() => handleReadMore(comment)}>
                             <span className='text-blue-800 font-semibold'>
-
-                            Read More...
+                              Read More...
                             </span>
                           </button>
                         </>
@@ -88,26 +86,26 @@ if(commentdata.data.insertedId){
                       )}
                     </td>
                     <td>
-                <select
-                  className='form-control'
-                  value={selectedFeedback}
-                  onChange={(e) => handleFeedbackChange(e.target.value)}
-                >
-                  <option value="">Select Feedback</option>
-                  <option value="Hate-speech">Hate-speech </option>
-                  <option value="spam">spam </option>
-                  <option value="Harassment">Harassment </option>
-                </select>
-              </td>
-              <td>
-                <button
-                  className='btn'
-                  onClick={() => handleReportClick(comment._id,comment.email,comment.comment)}
-                  disabled={!selectedFeedback}
-                >
-                  Report
-                </button>
-              </td>
+                      <select
+                        className='form-control'
+                        value={selectedFeedback}
+                        onChange={(e) => handleFeedbackChange(e.target.value)}
+                      >
+                        <option value="">Select Feedback</option>
+                        <option value="Hate-speech">Hate-speech</option>
+                        <option value="spam">spam</option>
+                        <option value="Harassment">Harassment</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        className='btn'
+                        onClick={() => handleReportClick(comment._id, comment.email, comment.comment)}
+                        disabled={!selectedFeedback}
+                      >
+                        Report
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
@@ -138,5 +136,6 @@ if(commentdata.data.insertedId){
     </div>
   );
 };
+
 
 export default Comments;

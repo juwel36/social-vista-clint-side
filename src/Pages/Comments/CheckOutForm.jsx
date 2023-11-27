@@ -29,7 +29,7 @@ const { isPending, data: users } = useQuery({
 
 const userid=users?.map(item => item._id)
 console.log(userid);
-const totalPrice="50"
+const totalPrice="10"
 
   useEffect(() => {
     if(totalPrice){
@@ -103,7 +103,7 @@ if(res.data?.paymentResult?.insertedId){
 Swal.fire({
 position: "top-end",
 icon: "success",
-title: "Thank you for the tk poysa",
+title: "Payment Success ",
 showConfirmButton: false,
 timer: 1500
 });

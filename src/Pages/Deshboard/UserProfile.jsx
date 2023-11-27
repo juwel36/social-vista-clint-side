@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import Spinner from "../../Components/Spinner";
 import { FaMedal } from "react-icons/fa";
+import AboutMe from "../Comments/AboutMe";
 
 
 const UserProfile = () => {
@@ -13,7 +14,7 @@ const UserProfile = () => {
   const { isPending, data: users } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?email=${user.email}`)
+      const res = await axiosSecure.get(`/users?email=${user?.email}`)
       return res.data
     }
 
@@ -21,7 +22,7 @@ const UserProfile = () => {
   const {  data: userPosts } = useQuery({
     queryKey: ['userPosts', user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/posts?email=${user.email}`);
+      const res = await axiosSecure.get(`/posts?email=${user?.email}`);
       return res.data;
     },
   });
@@ -139,7 +140,7 @@ posts :</h1>
       </div>
      
 </div>
-
+<AboutMe></AboutMe>
 
     </div>
   );

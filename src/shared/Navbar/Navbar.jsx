@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { RiDashboardFill } from "react-icons/ri";
 import useAnnousment from "../../Hooks/useAnnousment";
 import useAdmin from "../../Hooks/useAdmin";
+import { AwesomeButton } from "react-awesome-button";
 
 const Navbar = () => {
 const {user,logOut}=useContext(AuthContext)
@@ -32,13 +33,13 @@ const handlelogout=()=>{
 }
 
 const navlink=<>
- <li>   <Link to='/'>  Home </Link> </li>
- <li>   <Link to='/membership'>   Membership </Link> </li>
+ <li>   <Link to='/'> <AwesomeButton type="primary">Home</AwesomeButton>  </Link> </li>
+
+ <li>   <Link to='/membership'>  <AwesomeButton type="primary">Membership</AwesomeButton>  </Link> </li>
  <li>   <Link>
- <button className="flex gap-1 items-center">
-  <span className="text-xl flex text-blue-600"> <IoMdNotifications></IoMdNotifications><h1 className="text-xs text-pink-700">+{announcement?.length}</h1></span>
+ <AwesomeButton className="flex gap-1 items-center" type="primary"> <span className="text-xl flex text-blue-600"> <IoMdNotifications></IoMdNotifications><h1 className="text-xs text-pink-700">+{announcement?.length}</h1></span></AwesomeButton>
  
-</button>
+ 
  
   </Link> </li>
 
