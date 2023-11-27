@@ -1,5 +1,5 @@
 
-import { FaInstagram, FaShare, FaTwitter } from "react-icons/fa";
+import {  FaShare, FaTwitter } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { useContext, useState } from "react";
@@ -12,6 +12,8 @@ import { FacebookIcon, FacebookShareButton, TwitterShareButton } from "react-sha
 const PostDetail = () => {
   const { user } = useContext(AuthContext)
   const axoisSecure = useAxoisSecure()
+
+
 
   const { _id, description, email, image, name, timestamp, tag, title, upvote, downvote } = useLoaderData()
 

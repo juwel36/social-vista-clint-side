@@ -123,7 +123,7 @@ timer: 1500
                       <FaMedal></FaMedal>
                     </span> </p>
 
-
+                    <p className="text-yellow-600 text-sm">Also become a member of this site and unlimited post</p>
     </div>
 
 </div>

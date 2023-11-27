@@ -17,6 +17,7 @@ import Comments from "../Pages/Comments/Comments";
 import AdminProfile from "../Pages/Deshboard/AdminProfile";
 import MakeAnnouncement from "../Pages/Deshboard/MakeAnnouncement";
 import ManageUsers from "../Pages/Deshboard/ManageUsers";
+import ReportedActivities from "../Pages/Deshboard/ReportedActivities";
 
 
 
@@ -87,6 +88,10 @@ element:<MakeAnnouncement></MakeAnnouncement>
 {
   path:'manageUsers',
 element:<ManageUsers></ManageUsers>
+},
+{
+  path:'report',
+element:<ReportedActivities></ReportedActivities>
 }
 
 

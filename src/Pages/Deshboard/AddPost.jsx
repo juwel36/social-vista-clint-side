@@ -35,7 +35,7 @@ const axoisPublic=useAxoisPublic()
 
   })
 
-console.log(users.Badge);
+
 
   const {  data:tags } = useQuery({
     queryKey: ['tags'],
@@ -53,7 +53,7 @@ if(isPending) return <Spinner></Spinner>
 let Badge = null;
 
 if (users && users.length > 0) {
-  const currentUser = users.find(u => u.email === user.email);
+  const currentUser = users?.find(u => u.email === user.email);
   
   if (currentUser) {
     Badge = currentUser.Badge;
@@ -64,7 +64,7 @@ const postLimitReached = Badge === "Bronze" && posts && posts.length >= 5;
 
 console.log(postLimitReached);
 
-const tagOptions = tags.map((tag) => ({
+const tagOptions = tags?.map((tag) => ({
   value: tag.tags, 
   label: tag.tags, 
 }));
