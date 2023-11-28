@@ -37,7 +37,7 @@ const navlink=<>
 
  <li>   <Link to='/membership'>  <AwesomeButton type="primary">Membership</AwesomeButton>  </Link> </li>
  <li>   <Link>
- <AwesomeButton className="flex gap-1 items-center" type="primary"> <span className="text-xl flex text-blue-600"> <IoMdNotifications></IoMdNotifications><h1 className="text-xs text-pink-700">+{announcement?.length}</h1></span></AwesomeButton>
+ <AwesomeButton  className="flex gap-1 items-center" type="primary"> <span className="text-xl flex text-blue-600"> <IoMdNotifications></IoMdNotifications><h1 className="text-xs text-pink-700">+{announcement?.length}</h1></span></AwesomeButton>
  
  
  

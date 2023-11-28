@@ -18,7 +18,7 @@ const Suggestedtag = () => {
 
   return (
     <div>
-       <div className="text-center  w-96 mx-auto ">
+       <div className="text-center  w-full mx-auto ">
       <p className="text-blue-600 font-semibold text-xl"> Suggested Tag for Search:  </p>
     
     </div>
@@ -28,7 +28,7 @@ const Suggestedtag = () => {
         <Wave
           fill='#2F80ED'
           paused={false}
-          className="absolute top-0 h-72 lg:h-40  left-0 w-full"
+          className="absolute top-0   left-0 w-full"
           options={{
             height: 5,
             amplitude: 10,

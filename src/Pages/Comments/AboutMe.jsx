@@ -81,7 +81,7 @@ if(updatedata.data.mofifiedCount > 0){
 
   return (
     <div className="mt-10">
-      <div className="text-center my-10 w-full mx-auto ">
+      <div className="text-center my-10  mx-auto ">
       <p className="text-yellow-600 text-xl">  </p>
       <p className="text-black text-3xl border-y-2 py-2 mt-2"> About Me </p>
 
@@ -89,7 +89,7 @@ if(updatedata.data.mofifiedCount > 0){
     </div>
 <div className="flex justify-end mr-4">
 {/* Open the modal using document.getElementById('ID').showModal() method */}
-<button className="btn" onClick={()=>document.getElementById('my_modal_2').showModal()}> <FaEdit></FaEdit>  </button>
+<button className="btn mb-20 " onClick={()=>document.getElementById('my_modal_2').showModal()}> <FaEdit></FaEdit>  </button>
 <dialog id="my_modal_2" className="modal">
   <div className="modal-box">
   <form onSubmit={handleSubmit} >
@@ -147,7 +147,7 @@ if(updatedata.data.mofifiedCount > 0){
 
     <h1  className="flex gap-2 items-center border-b-2 w-56 text-2xl mt-2"> <PiStudentFill />  {item.college} </h1>
 
-<h1 className="flex gap-2 items-center border-b-2 w-56 text-2xl mt-2"> <FaLocationArrow></FaLocationArrow>  {item.place}  </h1>
+<h1 className="flex gap-2 items-center border-b-2 lg:w-56 text-2xl mt-2"> <FaLocationArrow></FaLocationArrow>  {item.place}  </h1>
 <h1 className="flex gap-2 items-center border-b-2 w-56 text-2xl mt-2"> <FaPhoneAlt /> {item.Contact} </h1>
 
 <h1 className="flex gap-2 items-center border-b-2 w-56 text-2xl mt-2">  <FaPerson></FaPerson>{item.gender} </h1>

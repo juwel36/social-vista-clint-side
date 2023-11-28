@@ -13,7 +13,7 @@ const Deshboard = () => {
 
   
   return (
-    <div className="bg-slate-200 ">
+    <div className="bg-slate-200 px-4 md:px-2 lg:px-0">
 
     <div className="max-w-6xl mx-auto  flex gap-4" >
       

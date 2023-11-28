@@ -5,7 +5,7 @@ import { AuthContext } from "../AuthProbider/AuthProvider";
 
 
  const axiosSecure=axios.create({
-  baseURL:'http://localhost:5000'
+  baseURL:'https://social-vista-server-side.vercel.app'
 })
 
 const useAxoisSecure = () => {

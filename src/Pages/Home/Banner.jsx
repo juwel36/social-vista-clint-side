@@ -20,46 +20,49 @@ const Banner = () => {
   const axiosSecure=useAxiosSecure()
 
   const handleSearch = async () => {
-    try {
+  
+      setCurrentPage(1); 
+  
       let url;
       if (searchTerm.trim() === '') {
-        url = `http://localhost:5000/posts?page=${currentPage}`;
+        url = `https://social-vista-server-side.vercel.app/posts?page=${currentPage}`;
       } else {
-        url = `http://localhost:5000/posts?tag=${searchTerm}&page=${currentPage}`;
+        url = `https://social-vista-server-side.vercel.app/posts?tag=${searchTerm}&page=1`;
       }
-
+  
       const response = await fetch(url);
       const data = await response.json();
       setSearchResults(data);
-
-      const countResponse = await fetch('http://localhost:5000/postscount');
-      const countData = await countResponse.json();
-      const totalPages = Math.ceil(countData.count / 5); 
-      setTotalPages(totalPages);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  
+   
+      const totalSearchResults = data.length;
+  
+      setTotalPages(Math.ceil(totalSearchResults / 5)); 
+    
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/posts?page=${currentPage}`);
+      
+        const url = searchTerm.trim() === ''
+          ? `https://social-vista-server-side.vercel.app/posts?page=${currentPage}`
+          : `https://social-vista-server-side.vercel.app/posts?tag=${searchTerm}&page=${currentPage}`;
+        const response = await fetch(url);
         const data = await response.json();
         setSearchResults(data);
-
-       
-        const countResponse = await fetch('http://localhost:5000/postscount');
+  
+        const countResponse = await fetch('https://social-vista-server-side.vercel.app/postscount');
         const countData = await countResponse.json();
-        const totalPages = Math.ceil(countData.count / 5); 
+        const totalPosts = searchTerm.trim() === '' ? countData.count : data.length;
+        const totalPages = Math.ceil(totalPosts / 5); 
         setTotalPages(totalPages);
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      
     };
-
+  
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
+  
 
 
 
@@ -117,7 +120,7 @@ const handleNextPage = () => {
 
   return (
     <div>
-      <div  className="relative">
+      <div  className="relative ">
         <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-70 rounded-lg"></div>
      
         <img className="h-96 w-full mt-7 rounded-lg" src={img} alt="" />
@@ -146,7 +149,7 @@ const handleNextPage = () => {
           <Suggestedtag></Suggestedtag>
         </div>
         
-        <div className="text-center mt-16 my-10 w-96 mx-auto ">
+        <div className="text-center mt-40 my-10 w-full mx-auto ">
       <p className="text-black text-3xl border-y-2  py-2 mt-2"> All Post </p>
      
 
@@ -155,7 +158,8 @@ const handleNextPage = () => {
         
         
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
-          {searchResults.map((result) => (
+          
+          {searchResults?.map((result) => (
            
 <Link  key={result._id} to={`/details/${result._id}`}>
 

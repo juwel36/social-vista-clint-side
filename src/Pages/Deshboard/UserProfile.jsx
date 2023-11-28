@@ -10,7 +10,7 @@ import AboutMe from "../Comments/AboutMe";
 const UserProfile = () => {
   const axiosSecure = useAxoisSecure()
   const { user } = useContext(AuthContext)
-
+console.log(user.email)
   const { isPending, data: users } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
@@ -19,6 +19,8 @@ const UserProfile = () => {
     }
 
   })
+
+
   const {  data: userPosts } = useQuery({
     queryKey: ['userPosts', user.email],
     queryFn: async () => {
@@ -27,11 +29,10 @@ const UserProfile = () => {
     },
   });
   
-
+console.log(users);
 
   if (isPending) {
-    return <div className="flex  justify-center items-center">
-      <div> <Spinner></Spinner>  </div></div>
+    return  <Spinner></Spinner> 
   }
 
   const getFormattedTime = (timestamp) => {
@@ -57,7 +58,7 @@ const UserProfile = () => {
                 Full name : <span className="text-2xl">{user?.displayName}</span>
               </h1>
               <h1 className="pb-3">
-                Email Address : <span className="text-2xl">{user?.email}</span>
+                Email Address : <span className="lg:text-2xl">{user?.email}</span>
               </h1>
               <h1 className="pb-3 flex items-center gap-4">
                 Badge:{" "}

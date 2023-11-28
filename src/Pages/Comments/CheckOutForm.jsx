@@ -92,6 +92,14 @@ if (error) {
     if (paymentIntent.status === 'succeeded') {
       console.log('transaction id', paymentIntent.id);
       setTranscationId(paymentIntent.id)}
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Payment Success ",
+        showConfirmButton: false,
+        timer: 1500
+        });
+        
  // now save the payment in the database
  const payment = {
   Badge: 'Gold'
@@ -117,7 +125,7 @@ timer: 1500
   return (
     <div>
 <div>
-<div className="text-center my-10 w-96 mx-auto ">
+<div className="text-center my-10 w-full mx-auto ">
       <p className="text-yellow-600 text-xl"> to pay $ 10 </p>
       <p className="text-black flex items-center gap-4 text-3xl border-y-2 py-2 mt-2">Upgrade Your Badge <span className="text-[#ffe23c]">
                       <FaMedal></FaMedal>

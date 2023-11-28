@@ -34,11 +34,12 @@ const {user}=useContext(AuthContext)
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
+     
       if (result.isConfirmed) {
         axiosSecure.delete(`/posts/${_id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
-              // Call refetch here to update the data
+           
               refetch();
               Swal.fire({
                 title: "Deleted!",
@@ -48,7 +49,6 @@ const {user}=useContext(AuthContext)
             }
           })
           .catch((error) => {
-            // Handle error, e.g., show an error message
             console.error("Error deleting post:", error);
             Swal.fire({
               title: "Error",
@@ -64,8 +64,46 @@ const {user}=useContext(AuthContext)
   return (
     <div className="pt-10">
       
-      <div className="overflow-x-auto">
-  <table className="table">
+      <div className="overflow-x-auto ">
+
+
+      <table className="table">
+           
+           <thead>
+             <tr>
+               <th></th>
+            
+        <th> Post Title</th>
+        <th>Number of votes
+</th>
+        <th>Action</th>
+        <th>Action</th>
+             </tr>
+           </thead>
+           <tbody>
+      {  
+      posts?.map((item,index)=>   <tr key={item._id}>
+        <th>{index+1}  </th>
+        <td> {item.title}  </td>
+        <td> {item.upvote}  </td>
+        <td>
+          <Link to={`/comments/${item._id}`}>
+            <button className="btn">Comments </button>
+          </Link>
+              </td>
+        <td>  <button 
+        onClick={()=>handledelete(item._id) }
+        className="btn">Delete </button>  </td>
+      </tr>  )
+      
+      }
+    
+ 
+    </tbody>
+         </table>
+
+
+  {/* <table className="table">
  
     <thead>
       <tr>
@@ -97,7 +135,7 @@ const {user}=useContext(AuthContext)
     
  
     </tbody>
-  </table>
+  </table> */}
 </div>
 
 

@@ -44,23 +44,23 @@ const ManageUsers = () => {
   };
 
   return (
-    <div>
-      <div className="text-center my-10 w-full  mx-auto">
+    <div className="">
+      <div className="text-center my-10   mx-auto">
         <p className="text-blue-600 text-xl">---How many??--- </p>
-        <p className="text-black text-3xl border-y-2 py-2 mt-2">  MANAGE ALL USERS </p>
+        <p className="text-black lg:text-3xl border-y-2 py-2 mt-2">  MANAGE ALL USERS </p>
       </div>
 
 
       <div>
      <div className="pl-3 mb-7">
         <h1 className="text-xl">  Find a specific user :</h1>
-        <div className="max-w-md mt-4">
+        <div className=" mt-4">
         <input
           type="text"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-full border border-2 border-blue-400 text-black rounded-lg focus:outline-none"
+          className="p-2  border border-2 border-blue-400 text-black rounded-lg focus:outline-none"
         />
         <button className="bg-blue-500 text-white p-2 rounded-r" onClick={handleSearch}>
           Search

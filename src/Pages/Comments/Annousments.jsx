@@ -12,6 +12,9 @@ const Annousments = () => {
 
   if (isPending) return <Spinner />;
 
+  if (announcement.length === 0) return null;
+
+
   return (
     <div className="mt-14">
       <div className="text-center my-10 w-96 mx-auto">

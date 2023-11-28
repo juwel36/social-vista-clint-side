@@ -70,12 +70,12 @@ if(postdata.data.insertedId){
 }
 
   return (
-    <div className="p-5">
+    <div className="p-5 overflow-hidden">
       <p className="text-2xl  font-semibold py-6"> Admin Profile : </p>
 <div className="flex justify-between flex-col lg:flex-row">
   
   <div >
-<img className="rounded-full border-2 border-blue-700" src={user?.photoURL} alt="" />
+<img className="rounded-full w-36 border-2 border-blue-700" src={user?.photoURL} alt="" />
 <h1 className=" pt-3 pb-2">
  Name:  <span className="text-2xl ">  {user?.displayName}</span>
 </h1>
@@ -117,7 +117,7 @@ if(postdata.data.insertedId){
   </div>      
  
 
-  <div className=" flex justify-between items-center flex-col md:flex-row lg:flex-row-reverse">
+  <div className=" flex justify-between items-center flex-col md:flex-row lg:flex-row-reverse overflow-hidden">
 
 <div>
 
@@ -128,7 +128,7 @@ if(postdata.data.insertedId){
             cy="50%"
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={120}
+            outerRadius={100}
             fill="#8884d8"
             dataKey="value"
           >
