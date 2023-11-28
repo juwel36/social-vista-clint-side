@@ -102,9 +102,11 @@ if(isPending) return <Spinner></Spinner>
     <div>
       <div  className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-70 rounded-lg"></div>
+     
         <img className="h-96 w-full mt-7 rounded-lg" src={img} alt="" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-         
+        <h1 className='text-4xl p-3 font-bold shadow-2xl'> Elevate Your Social Experience <br /> <span className='text-2xl '> 🎭 Dive into Social Vista 🤾‍♂
+ </span> </h1>
           <div className="flex items-center justify-center max-w-md mx-auto mt-4">
             <input
               type="text"
@@ -127,8 +129,12 @@ if(isPending) return <Spinner></Spinner>
           <Suggestedtag></Suggestedtag>
         </div>
         
-        <h2 className="text-2xl font-bold mb-2 my-4">All Post :</h2>
-        
+        <div className="text-center mt-16 my-10 w-96 mx-auto ">
+      <p className="text-black text-3xl border-y-2  py-2 mt-2"> All Post </p>
+     
+
+
+    </div>
         
         
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>

@@ -59,9 +59,20 @@ const {user}=useContext(AuthContext)
   refetch()
     e.target.reset();
     }
-  
-  
+    const updatedata=await axiosSecure.patch('/about',userData)
+if(updatedata.data.mofifiedCount > 0){
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "posted succesfully",
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
 
+    console.log(updatedata);
+    e.target.reset();
+    refetch()
   
   
   }

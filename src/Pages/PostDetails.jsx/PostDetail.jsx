@@ -1,12 +1,14 @@
 
 import {  FaShare, FaTwitter } from "react-icons/fa";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FacebookIcon, FacebookShareButton, TwitterShareButton } from "react-share";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../Components/Spinner";
 
 
 
@@ -14,12 +16,22 @@ const PostDetail = () => {
   const { user } = useContext(AuthContext)
   const axoisSecure = useAxoisSecure()
 
+  const { id } = useParams();
 
-const { _id, description, email, image, name, timestamp, tag, title, upvote, downvote } = useLoaderData()
-
-const [voted, setVoted] = useState(false); 
-const [voteType, setVoteType] = useState(null);
-
+  const { isPending, data:singlePost = [] ,refetch} = useQuery({
+    queryKey: ['singlepost', id],
+    queryFn: async () => {
+      const res = await axoisSecure.get(`/posts/${id}`);
+      return res.data;
+    },
+  });
+  
+  
+  const { _id, description, email, image, name, timestamp, tag, title, upvote, downvote } = singlePost
+  
+  const [voted, setVoted] = useState(false); 
+  const [voteType, setVoteType] = useState(null);
+  
   const getFormattedTime = (timestamp) => {
     const date = new Date(timestamp);
     let hour = date.getUTCHours();
@@ -30,13 +42,14 @@ const [voteType, setVoteType] = useState(null);
     return `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
     
   }
+  if(isPending) return <Spinner></Spinner>
   
   const handlepostcomment = async (e) => {
     e.preventDefault()
     const comment = e.target.comment.value;
-
+    
     if (user) {
-
+      
       const commentdata = {
         comment,
         title: title,
@@ -73,23 +86,15 @@ const [voteType, setVoteType] = useState(null);
 
 
   const handleVote = async (type) => {
-
-
     if (user) {
-
       if (!voted) {
         const response = await axoisSecure.patch(`/posts/${_id}/vote`, { type });
-        
         if (response.data) {
-          
           setVoted(true);
           setVoteType(type);
-          // window.location.reload();
-          
+          refetch()
         }
       }
- 
-
     } else {
       Swal.fire({
         position: "top-end",
@@ -97,12 +102,8 @@ const [voteType, setVoteType] = useState(null);
         title: "You have to Log in for Vote",
         showConfirmButton: false,
         timer: 1500
-      });
-      
-    }
-
-
-    
+      }); 
+    } 
   };
   
   
@@ -190,13 +191,14 @@ const [voteType, setVoteType] = useState(null);
           <div className="flex gap-4 my-5">
           <button
           onClick={() => handleVote('upvote')}
-          className={`flex btn bg-transparent gap-2 items-center border-4 border-blue-500 rounded-lg p-1 px-3 ${voteType === 'upvote' ? 'bg-blue-500 text-white' : ''}`}
+          className={`flex btn  gap-2 items-center border-4 border-blue-500 rounded-lg p-1 px-3 ${voteType === 'upvote' ? 'bg-blue-500 text-white' : ''}`}
           disabled={voted}
         >
           Up Vote <SlLike />
         </button>
-            <button onClick={() => handleVote('downvote')}    className={`flex gap-2 bg-transparent btn items-center border-4 border-blue-500  rounded-lg p-1 px-3 ${voteType === 'downvote' ? 'bg-blue-500 text-white' : ''}`}
-          disabled={voted}> Down Vote <SlDislike /> </button>
+            <button onClick={() => handleVote('downvote')}    className={`flex gap-2  btn items-center border-4 border-blue-500  rounded-lg p-1 px-3 ${voteType === 'downvote' ? 'bg-blue-700 text-white' : ''}`}
+          disabled={voted}
+          > Down Vote <SlDislike /> </button>
           </div>
         <div className="flex flex-col lg:flex-row justify-between">
         <div>

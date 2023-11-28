@@ -27,25 +27,28 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    children:[
-{
-  path:'/',
-  element:<Home></Home>
-},
-{
-  path:'/membership',
-  element:<PrivetRoute><MemberShip></MemberShip></PrivetRoute>
-},
-{
-  path:'/details/:id',
-  element: <PostDetail></PostDetail>,
-  loader:({params})=> fetch(`http://localhost:5000/posts/${params.id}`)
-},
-{
-  path: '/comments/:postId',
-  element: <Comments></Comments>,
-  loader: ({ params }) => ({ postId: params.postId }),
-},
+    children: [
+      {
+        path: '/',
+        element: <Home></Home>
+      },
+      
+      {
+        path: '/membership',
+        element: <PrivetRoute><MemberShip></MemberShip></PrivetRoute>
+      },
+      {
+        path: '/details/:id',
+        element: <PostDetail></PostDetail>,
+        loader: ({ params }) => ({id: params.id }),
+
+
+      },
+      {
+        path: '/comments/:postId',
+        element: <Comments></Comments>,
+        loader: ({ params }) => ({ postId: params.postId }),
+      },
 
 
 
@@ -55,55 +58,55 @@ const router = createBrowserRouter([
 
   // deshboard
   {
-    path:'deshboard',
-    element:  <Deshboard></Deshboard>,
-    children:[
-{
-  path:'userHome',
-element: <UserHome></UserHome>
+    path: 'deshboard',
+    element: <Deshboard></Deshboard>,
+    children: [
+      {
+        path: 'userHome',
+        element: <UserHome></UserHome>
 
-},
-{
-  path:'myprofile',
-element:<UserProfile></UserProfile>
-},
-{
-  path:'addpost',
-element:<AddPost></AddPost>
-},
-{
-  path:'myposts',
-element:<Mypost></Mypost>
-},
-// admin 
+      },
+      {
+        path: 'myprofile',
+        element: <UserProfile></UserProfile>
+      },
+      {
+        path: 'addpost',
+        element: <AddPost></AddPost>
+      },
+      {
+        path: 'myposts',
+        element: <Mypost></Mypost>
+      },
+      // admin 
 
-{
-  path:'adminprofile',
-element:<AdminProfile></AdminProfile>
-},
-{
-  path:'makeAnnouncement',
-element:<MakeAnnouncement></MakeAnnouncement>
-},
-{
-  path:'manageUsers',
-element:<ManageUsers></ManageUsers>
-},
-{
-  path:'report',
-element:<ReportedActivities></ReportedActivities>
-}
+      {
+        path: 'adminprofile',
+        element: <AdminProfile></AdminProfile>
+      },
+      {
+        path: 'makeAnnouncement',
+        element: <MakeAnnouncement></MakeAnnouncement>
+      },
+      {
+        path: 'manageUsers',
+        element: <ManageUsers></ManageUsers>
+      },
+      {
+        path: 'report',
+        element: <ReportedActivities></ReportedActivities>
+      }
 
 
     ]
   },
   {
-    path:'/login',
-    element:  <Login></Login>
+    path: '/login',
+    element: <Login></Login>
   },
   {
-    path:'/signup',
-    element:<SignUp></SignUp>
+    path: '/signup',
+    element: <SignUp></SignUp>
   }
 ]);
 
