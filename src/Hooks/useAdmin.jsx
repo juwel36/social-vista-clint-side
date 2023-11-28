@@ -6,7 +6,7 @@ import useAxoisSecure from "./useAxiosSecure";
 const useAdmin = () => {
   const {user,loading}=useContext(AuthContext)
   const axiosSecure=useAxoisSecure()
-  const {data:isAdmin}=useQuery({
+  const {data:isAdmin ,isPending}=useQuery({
   queryKey: [user?.email,'isAdmin'],
   enabled:!loading,
   queryFn:async()=>{
@@ -16,7 +16,7 @@ const useAdmin = () => {
   }
   
   })
-  return [isAdmin]
+  return [isAdmin,isPending]
   
   };
   

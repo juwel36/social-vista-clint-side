@@ -45,7 +45,7 @@ const ManageUsers = () => {
 
   return (
     <div>
-      <div className="text-center my-10 w-96 mx-auto">
+      <div className="text-center my-10 w-full  mx-auto">
         <p className="text-blue-600 text-xl">---How many??--- </p>
         <p className="text-black text-3xl border-y-2 py-2 mt-2">  MANAGE ALL USERS </p>
       </div>

@@ -81,7 +81,7 @@ if(updatedata.data.mofifiedCount > 0){
 
   return (
     <div className="mt-10">
-      <div className="text-center my-10 w-96 mx-auto ">
+      <div className="text-center my-10 w-full mx-auto ">
       <p className="text-yellow-600 text-xl">  </p>
       <p className="text-black text-3xl border-y-2 py-2 mt-2"> About Me </p>
 

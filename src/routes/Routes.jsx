@@ -18,6 +18,7 @@ import AdminProfile from "../Pages/Deshboard/AdminProfile";
 import MakeAnnouncement from "../Pages/Deshboard/MakeAnnouncement";
 import ManageUsers from "../Pages/Deshboard/ManageUsers";
 import ReportedActivities from "../Pages/Deshboard/ReportedActivities";
+import AdminRoute from "./AdminRoute";
 
 
 
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
   // deshboard
   {
     path: 'deshboard',
-    element: <Deshboard></Deshboard>,
+    element: <PrivetRoute>  <Deshboard></Deshboard></PrivetRoute>,
     children: [
       {
         path: 'userHome',
@@ -82,19 +83,19 @@ const router = createBrowserRouter([
 
       {
         path: 'adminprofile',
-        element: <AdminProfile></AdminProfile>
+        element:<AdminRoute> <AdminProfile></AdminProfile></AdminRoute>
       },
       {
         path: 'makeAnnouncement',
-        element: <MakeAnnouncement></MakeAnnouncement>
+        element: <AdminRoute><MakeAnnouncement></MakeAnnouncement></AdminRoute>
       },
       {
         path: 'manageUsers',
-        element: <ManageUsers></ManageUsers>
+        element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path: 'report',
-        element: <ReportedActivities></ReportedActivities>
+        element:<AdminRoute> <ReportedActivities></ReportedActivities></AdminRoute>
       }
 
 

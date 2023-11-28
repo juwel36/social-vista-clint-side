@@ -7,7 +7,7 @@ import { FaComments } from 'react-icons/fa';
 import { SlDislike, SlLike } from 'react-icons/sl';
 import Suggestedtag from '../../Components/Suggestedtag';
 import Spinner from '../../Components/Spinner';
-
+import { FcNext, FcPrevious } from "react-icons/fc";
 
 
 const Banner = () => {
@@ -81,7 +81,24 @@ const Banner = () => {
 if(isPending) return <Spinner></Spinner>
 
 
+const handlePreviousPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage((prevPage) => prevPage - 1);
+  }
+};
 
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage((prevPage) => prevPage + 1);
+  }
+};
+
+
+ const getPageRange = () => {
+  const start = Math.max(1, currentPage - 1);
+  const end = Math.min(totalPages, start + 2);
+  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+};
   
   const getFormattedTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -211,21 +228,38 @@ if(isPending) return <Spinner></Spinner>
           ))}
         </div>
         
-        {/* Pagination controls */}
-        <div className="mt-4 flex justify-center overflow-x-auto">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              className={`mx-2 px-4 py-2 rounded ${
-                currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
-              }`}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
+    
+     {/* Pagination controls */}
+     <div className="mt-4 flex justify-center overflow-x-auto">
+        <button
+          className={`mx-2 px-4 py-2 rounded ${
+            currentPage === 1 ? 'bg-gray-300 text-gray-700' : 'bg-blue-200 text-white'
+          }`}
+          onClick={handlePreviousPage}
+        >
+        <FcPrevious />
+        </button>
+        {getPageRange().map((pageNumber) => (
+          <button
+            key={pageNumber}
+            className={`mx-2 px-4 py-2 rounded ${
+              currentPage === pageNumber ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'
+            }`}
+            onClick={() => setCurrentPage(pageNumber)}
+          >
+            {pageNumber}
+          </button>
+        ))}
+        <button
+          className={`mx-2 px-4 py-2 rounded ${
+            currentPage === totalPages ? 'border-2' : 'border-2'
+          }`}
+          onClick={handleNextPage}
+        >
+         <FcNext />
+        </button>
       </div>
+    </div>
     </div>
   );
 };

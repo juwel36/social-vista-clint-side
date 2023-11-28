@@ -28,9 +28,9 @@ const Suggestedtag = () => {
         <Wave
           fill='#2F80ED'
           paused={false}
-          className="absolute top-0  left-0 w-full"
+          className="absolute top-0 h-72 lg:h-40  left-0 w-full"
           options={{
-            height: 40,
+            height: 5,
             amplitude: 10,
             speed: 0.15,
             points: 3
@@ -39,7 +39,7 @@ const Suggestedtag = () => {
         <div className="flex flex-wrap gap-10 items-center justify-center  p-5 rounded-lg relative z-10">
           {tags?.map(item => (
             <div key={item._id}>
-              <p className="font-bold "> # {item.tags} </p>
+              <p className="font-bold text-white"> # {item.tags} </p>
             </div>
           ))}
         </div>
