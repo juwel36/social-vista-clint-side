@@ -204,7 +204,7 @@ Author Email </h1>
 <div className="w-full">
 <h1 className="text-xl font-bold text-black pt-4 pb-3"> Up Vote
  </h1>
- <input type="text" name="upvote" defaultValue={0} placeholder="0"   className="input input-bordered input-info w-full " />
+ <input type="text" name="upvote" defaultValue={0} readOnly placeholder="0"   className="input input-bordered input-info w-full " />
 
 
 </div>
@@ -212,7 +212,7 @@ Author Email </h1>
 <div className="w-full">
 <h1 className="text-xl font-bold text-black pt-4 pb-3"> Down Vote
  </h1>
- <input type="text" name="downvote" defaultValue={0} placeholder="0"   className="input input-bordered input-info w-full " />
+ <input type="text" name="downvote" readOnly defaultValue={0} placeholder="0"   className="input input-bordered input-info w-full " />
 
 
 </div>
