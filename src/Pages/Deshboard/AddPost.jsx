@@ -62,7 +62,7 @@ if (users && users.length > 0) {
 
 const postLimitReached = Badge === "Bronze" && posts && posts.length >= 5;
 
-console.log(postLimitReached);
+
 
 const tagOptions = tags?.map((tag) => ({
   value: tag.tags, 
@@ -75,7 +75,9 @@ const handleTagChange = (selectedOption) => {
 };
 
 
-const currentTime = new Date();
+const currentDateTime = new Date();
+const currentTime = currentDateTime.toLocaleString("en-US", { timeZone: "Asia/Dhaka" });
+
 
 const handleSubmit=async(e)=>{
   e.preventDefault();
@@ -84,21 +86,22 @@ const handleSubmit=async(e)=>{
 
 
   
-  const image=e.target.image.value;
-  const name=e.target.name.value;
+  const image="https://i.ibb.co/ncgRKSj/download-2.png"
+  const name=user.displayName
   const title=e.target.title.value;
   const description=e.target.description.value;
   const tag=e.target.tag.value;
-  const email=e.target.email.value;
-  const upvote=e.target.upvote.value;
-  const downvote=e.target.downvote.value;
+  const email=user.email;
+  const upvote="0"
+  const downvote="0"
 
 
 
 const userData={
   image,name,title,description,tag,email,upvote,downvote,
-  timestamp: currentTime.toISOString(),
+  timestamp:currentTime,
 }
+
 const postdata=await axoisSecure.post('/posts',userData)
 console.log(postdata);
 if(postdata.data.insertedId){
@@ -149,15 +152,7 @@ setAfterloading(false);
 <form onSubmit={handleSubmit} >
 <div className="flex   gap-7 mt-7">
 
-<div className="w-full">
-<h1 className="text-xl font-bold text-black pt-4 pb-3">Author Image </h1>
-<input type="text" name="image" placeholder="Author Image" className="input input-bordered input-info w-full " />
-</div>
 
-<div className="w-full">
-<h1 className="text-xl font-bold text-black pt-4 pb-3">Author Name</h1>
-<input type="text" name="name" placeholder="Author Name" className="input input-bordered input-info w-full " />
-</div>
 
 </div>
 
@@ -190,34 +185,9 @@ Description </h1>
               />
             </div>
 
-<div className="w-full">
-<h1 className="text-xl font-bold text-black pt-4 pb-3">
-Author Email </h1>
-<input type="text" name="email" placeholder="" readOnly defaultValue={user?.email} className="input input-bordered input-info w-full " />
-
-
-</div>
-</div>
-
-{/* ------------------- */}
-<div className="flex gap-7">
-<div className="w-full">
-<h1 className="text-xl font-bold text-black pt-4 pb-3"> Up Vote
- </h1>
- <input type="text" name="upvote" defaultValue={0} readOnly placeholder="0"   className="input input-bordered input-info w-full " />
-
 
 </div>
 
-<div className="w-full">
-<h1 className="text-xl font-bold text-black pt-4 pb-3"> Down Vote
- </h1>
- <input type="text" name="downvote" readOnly defaultValue={0} placeholder="0"   className="input input-bordered input-info w-full " />
-
-
-</div>
-
-</div>
 
 
 <input className="btn w-full my-8 mb-14" type="submit" value="Create Post" />

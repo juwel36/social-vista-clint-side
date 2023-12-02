@@ -1,17 +1,27 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import Spinner from "../../Components/Spinner";
 import { FaMedal } from "react-icons/fa";
 import AboutMe from "../Comments/AboutMe";
+import useAxoisPublic from "../../Hooks/useAxiosPublic";
+
+
+const image_hosting_key=import.meta.env.VITE_IMAGE_HOSTING_KEY
+const image_hosting_api=`https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 
 const UserProfile = () => {
   const axiosSecure = useAxoisSecure()
+  const axiosPublic = useAxoisPublic()
   const { user } = useContext(AuthContext)
-console.log(user.email)
-  const { isPending, data: users } = useQuery({
+  const [afterloading,setAfterloading]=useState(false)
+  const [selectedFile, setSelectedFile] = useState(null);
+
+
+
+  const { isPending, data: users,refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?email=${user?.email}`)
@@ -29,31 +39,59 @@ console.log(user.email)
     },
   });
   
-console.log(users);
+
 
   if (isPending) {
     return  <Spinner></Spinner> 
   }
 
-  const getFormattedTime = (timestamp) => {
+ 
+  const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
-    let hour = date.getUTCHours();
-    const minute = date.getUTCMinutes();
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    hour = hour % 12 || 12;
+    const formattedTime = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    return formattedTime;
+  };
+  
 
-    return `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+  // ... (other code)
 
-  }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
 
+  const handlepatchimage = async (e, userId) => {
+    e.preventDefault();
+    setAfterloading(true);
+
+    const imageFile = { image: e.target.elements.image.files[0] };
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
+    
+    
+  
+    const menuItem = {
+      photoUrl: res.data.data.display_url,
+    };
+    const Menures = await axiosSecure.patch(`/users/${userId}`, menuItem);
+    e.target.reset();
+    
+    refetch()
+    setAfterloading(false); 
+  };
+  
 
   return (
     <div>
       <h1 className="text-3xl text-black lg:pt-20 p-3 mb-4"> My Profile </h1>
-      <div className="flex flex-col-reverse lg:flex-row justify-evenly">
-        <div>
+      <div >
+        <div >
           {users?.map((userData) => (
-            <div key={userData._id}>
+         <div className="flex flex-col-reverse lg:flex-row justify-evenly" key={userData._id}>
+             <div >
               <h1 className="pb-3">
                 Full name : <span className="text-2xl">{user?.displayName}</span>
               </h1>
@@ -76,14 +114,31 @@ console.log(users);
                 </span>
               </h1>
             </div>
-          ))}
-        </div>
+
         <div>
+          
           <img
             className="w-28 rounded-full border-blue-800 border-2 shadow-md"
-            src={user.photoURL}
+            src={userData.photoUrl}
             alt=""
           />
+          <div>
+          <form onSubmit={(e) => handlepatchimage(e, userData._id)}>
+<label className="label">
+    <span className="label-text">Image*</span>
+ 
+  </label>
+  <input type="file" name="image" onChange={handleFileChange}/>
+<input  className="btn" type="submit" value="Edit Photo"  disabled={!selectedFile} />
+
+            </form>
+
+</div>
+        </div>
+
+
+         </div>
+          ))}
         </div>
       </div>
 <div>
@@ -120,7 +175,7 @@ posts :</h1>
   </div>
 <div className='flex justify-between font-semibold '>
 <h1> Tag: {post.tag} </h1>
-<h1>Time: {getFormattedTime(post.timestamp)} </h1>
+<h1>Time:  {formatTimestamp(post.timestamp)} </h1>
 </div>
 <div className='flex justify-between mt-3 font-semibold'>
 <h1> 
@@ -142,7 +197,11 @@ posts :</h1>
      
 </div>
 <AboutMe></AboutMe>
-
+{afterloading && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+              <span className="loading loading-spinner text-primary"></span>
+            </div>
+          )}
     </div>
   );
 };

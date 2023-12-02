@@ -23,16 +23,19 @@ const axiosPublic=useAxiosPublic()
     formState: { errors },
   } = useForm()
   const onSubmit = async (data) => {
+
+    const photoUrl="https://i.ibb.co/ncgRKSj/download-2.png"
     try {
       const res = await createuser(data.email, data.password);
       console.log(res);
   
-      await updateprofile(data.name, data.photoUrl);
+      await updateprofile(data.name, photoUrl);
   
       const userInfo = {
         name: data.name,
         email: data.email,
         Badge: 'Bronze',
+        photoUrl:photoUrl
       };
   
       const dbResponse = await axiosPublic.post('/users', userInfo);
@@ -78,14 +81,7 @@ navigate('/')
           <input type="text" name="name" {...register("name",{ required: true })} placeholder="name" className="input input-bordered"  />
           {errors.name && <span className="text-red-500">This field is required</span>}
         </div>
-      <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold text-white"> Photo Url</span>
-          </label>
-          <input type="text" name="photoUrl" {...register("photoUrl",{ required: true })} placeholder="photo URl" className="input input-bordered"  />
-          {errors.photoUrl && <span className="text-red-500">This field is required</span>}
-        </div>
-      
+     
       
         <div className="form-control">
           <label className="label">

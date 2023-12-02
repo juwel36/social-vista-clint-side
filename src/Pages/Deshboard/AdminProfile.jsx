@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import useAxoisSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -8,12 +8,19 @@ import { FaComment,  FaUsers } from "react-icons/fa";
 import { PieChart, Pie,  Cell,  Legend } from 'recharts';
 import { IoCreate } from "react-icons/io5";
 import Swal from "sweetalert2";
+import useAxoisPublic from "../../Hooks/useAxiosPublic";
+const image_hosting_key=import.meta.env.VITE_IMAGE_HOSTING_KEY
+const image_hosting_api=`https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
+
 
 const AdminProfile = () => {
 
   const axiosSecure = useAxoisSecure()
+  const axiosPublic = useAxoisPublic()
   const { user } = useContext(AuthContext)
-
+  const [afterloading,setAfterloading]=useState(false)
+  const [selectedFile, setSelectedFile] = useState(null);
 
 
   const { isPending, data:stats } = useQuery({
@@ -23,6 +30,16 @@ const AdminProfile = () => {
 return res.data
     }
   })
+
+  const { data: users,refetch } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`)
+      return res.data
+    }
+
+  })
+
 
   if (isPending) return <Spinner></Spinner>
 
@@ -69,20 +86,84 @@ if(postdata.data.insertedId){
 
 }
 
-  return (
-    <div className="p-5 overflow-hidden">
-      <p className="text-2xl  font-semibold py-6"> Admin Profile : </p>
-<div className="flex justify-between flex-col lg:flex-row">
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  setSelectedFile(file);
+};
+
+const handlepatchimage = async (e, userId) => {
+  e.preventDefault();
+  setAfterloading(true);
+
+  const imageFile = { image: e.target.elements.image.files[0] };
+  const res = await axiosPublic.post(image_hosting_api, imageFile, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  });
   
-  <div >
-<img className="rounded-full w-36 border-2 border-blue-700" src={user?.photoURL} alt="" />
-<h1 className=" pt-3 pb-2">
- Name:  <span className="text-2xl ">  {user?.displayName}</span>
-</h1>
-<p> Email : {user?.email} </p>
+  console.log(res);
+
+  const menuItem = {
+    photoUrl: res.data.data.display_url,
+  };
+  const Menures = await axiosSecure.patch(`/users/${userId}`, menuItem);
+  e.target.reset();
+  
+  refetch()
+  setAfterloading(false); 
+};
+
+
+  return (
+    <div className="p-3 overflow-hidden">
+      <p className="text-2xl  font-semibold py-6"> Admin Profile : </p>
+<div className="flex justify-between  flex-col lg:flex-row">
+  
+{
+users.map((userData)=>(
+
+
+
+  <div key={userData._id}>
+<img className="rounded-full w-20 border-2 border-blue-700" src={userData?.
+photoUrl
+} alt="" />
+<div>
+          <form onSubmit={(e) => handlepatchimage(e, userData._id)}>
+<label className="label">
+    <span className="label-text">Edit Image*</span>
+ 
+  </label>
+  <div className="flex">
+
+  <input className=" w-56" type="file" name="image" onChange={handleFileChange}/> 
+<input  className="btn text-xs border-2 rounded-lg px-2 border-blue-400 " type="submit" value="Edit Photo" disabled={!selectedFile} />
+
   </div>
+
+            </form>
+
+</div>
+
+<h1 className=" pt-3 pb-2">
+ Name:  <span className="text-2xl ">  {userData?.name}</span>
+</h1>
+<p> Email : {userData?.email} </p>
+  </div>
+
+
+))
+
+
+}
+
+
+
+
+
   {/* --------------------- */}
-  <div className="stats shadow border-4">
+  <div className="stats shadow border-4 lg:h-40">
   
   <div className="stat">
     <div className="stat-figure text-secondary">

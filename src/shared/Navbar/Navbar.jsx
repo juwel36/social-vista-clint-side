@@ -2,19 +2,46 @@ import { Link } from "react-router-dom";
 import img from '../../assets/IMG_20231124_000541.png'
 
 import { IoMdNotifications } from "react-icons/io";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProbider/AuthProvider";
 import Swal from "sweetalert2";
 import { RiDashboardFill } from "react-icons/ri";
 import useAnnousment from "../../Hooks/useAnnousment";
 import useAdmin from "../../Hooks/useAdmin";
 import { AwesomeButton } from "react-awesome-button";
+import { useQuery } from "@tanstack/react-query";
+import useAxoisSecure from "../../Hooks/useAxiosSecure";
+import Spinner from "../../Components/Spinner";
+import useAxoisPublic from "../../Hooks/useAxiosPublic";
 
 const Navbar = () => {
 const {user,logOut}=useContext(AuthContext)
-
+const axiosSecure=useAxoisSecure()
+const axiosPublic=useAxoisPublic()
 const [announcement]=useAnnousment()
 const [isAdmin]=useAdmin()
+
+
+
+const {isPending, data:users ,refetch} = useQuery({
+  queryKey: ['users','photoUrl'],
+  queryFn: async () => {
+    const res = await axiosPublic.get(`/users?email=${user?.email}`)
+
+    return res.data
+  }
+
+})
+
+useEffect(() => {
+  // Refetch user data when the user changes
+  refetch();
+}, [user, refetch]);
+
+
+if (isPending ) {
+  return <Spinner />;
+}
 
 
 const handlelogout=()=>{
@@ -78,25 +105,29 @@ const navlink=<>
 
   {
 user? <div className="justify-end">
-   <div className="dropdown dropdown-end">
+   <div className="dropdown dropdown-end ">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+   
+      {users?.map(userData=>  (
+
+        <div key={userData._id}>
+          <img  className="w-10  rounded-full border-2 border-blue-500"  alt="image" src={userData?.photoUrl}  />
         </div>
+      ) )}
       </label>
       <ul tabIndex={0} className="menu menu-sm dropdown-content space-y-6 mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
        <p className="bg-sky-700 text-white p-2 rounded-md"> {user.displayName} </p>
 
 <li>
 {
-  user && isAdmin && <li>   <Link to='/deshboard/adminprofile'>  <button className="btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
+  user && isAdmin &&   <Link to='/deshboard/adminprofile'>  <button className="btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
 Deshboard <RiDashboardFill style={{ marginLeft: '5px' }} />
-</button> </Link>  </li>
+</button> </Link>  
 }
 {
-  user && !isAdmin && <li>   <Link to='/deshboard/myprofile'>  <button className=" btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
+  user && !isAdmin &&    <Link to='/deshboard/myprofile'>  <button className=" btn btn-outline py-2" style={{ display: 'flex', alignItems: 'center' }}>  
 Deshboard <RiDashboardFill style={{ marginLeft: '5px' }} />
-</button> </Link>  </li>
+</button> </Link>  
 }
 </li>
   
