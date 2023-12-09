@@ -2,7 +2,7 @@
  ##  Website Name - " Social Vista  "
 
 -Website live link:  [https://social-vista.web.app/](https://social-vista.web.app/)
--Website live link:  [https://github.com/juwel36/social-vista-server-side](https://github.com/juwel36/social-vista-server-side)
+-SErver side link:  [https://github.com/juwel36/social-vista-server-side](https://github.com/juwel36/social-vista-server-side)
 
 
 
