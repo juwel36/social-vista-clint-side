@@ -5,8 +5,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
+import { useRef } from "react";
 
 const Annousments = () => {
+  const announcementsRef = useRef(null);
   const [announcement, isPending] = useAnnousment();
   
 
@@ -16,7 +18,7 @@ const Annousments = () => {
 
 
   return (
-    <div className="mt-14">
+    <div className="mt-14" >
       <div className="text-center my-10 w-96 mx-auto">
         <p className="text-yellow-600 text-xl">Important </p>
         <p className="text-black text-3xl border-y-2 py-2 mt-2">  Announcement </p>

@@ -123,12 +123,12 @@ const UserProfile = () => {
             alt=""
           />
           <div>
-          <form onSubmit={(e) => handlepatchimage(e, userData._id)}>
+          <form  onSubmit={(e) => handlepatchimage(e, userData._id)}>
 <label className="label">
     <span className="label-text">Image*</span>
  
   </label>
-  <input type="file" name="image" onChange={handleFileChange}/>
+  <input className="w-1/2 block" type="file" name="image" onChange={handleFileChange}/>
 <input  className="btn" type="submit" value="Edit Photo"  disabled={!selectedFile} />
 
             </form>

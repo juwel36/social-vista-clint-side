@@ -47,6 +47,9 @@ const axoisPublic=useAxoisPublic()
   })
   
   
+  const userPhotoUrl = users?.map(u => u.photoUrl);
+console.log(userPhotoUrl);
+
 
 if(isPending) return <Spinner></Spinner>
 
@@ -86,8 +89,8 @@ const handleSubmit=async(e)=>{
 
 
   
-  const image="https://i.ibb.co/ncgRKSj/download-2.png"
-  const name=user.displayName
+  const image=userPhotoUrl;
+  const name=user.displayName;
   const title=e.target.title.value;
   const description=e.target.description.value;
   const tag=e.target.tag.value;

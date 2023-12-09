@@ -103,17 +103,13 @@ const Banner = () => {
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   };
 
-  const getFormattedTime = (timestamp) => {
+ 
+  const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
-    let hour = date.getUTCHours();
-    const minute = date.getUTCMinutes();
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    hour = hour % 12 || 12;
-
-    return `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
-
-  }
-
+    const formattedTime = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    return formattedTime;
+  };
+  
 
 
 
@@ -191,7 +187,7 @@ const Banner = () => {
                 </div>
                 <div className='flex justify-between font-semibold '>
                   <h1> Tag: {result.tag} </h1>
-                  <h1>Time: {getFormattedTime(result.timestamp)} </h1>
+                  <h1>Time: {formatTimestamp(result.timestamp)} </h1>
                 </div>
                 <div className='flex justify-between mt-3 font-semibold'>
                   <h1>
